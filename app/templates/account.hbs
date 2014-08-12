@@ -1,0 +1,52 @@
+<div class="jumbotron">
+  <div class="container">
+    <h2>Welcome to #User Name!</h2>
+    <p>Start an Exam Now</p>
+    <p><a {{action 'openModal' 'modal' model}} class="btn btn-primary" role="button">New Exam »</a></p>
+  </div>
+</div>
+<div class="container">
+  {{outlet}}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Exam ID</th>
+        <th>Total Question</th>
+        <th>Right Answers</th>
+        <th>Passing %</th>
+        <th>Exam Result %</th>
+        <th>Exam Result</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>E-000000003</td>
+        <td>60</td>
+        <td>12</td>
+        <td>68%</td>
+        <td>28%</td>
+        <td>Fail</td>
+        <th><a class="btn btn-primary btn-xs" role="button">view results »</a></th>
+      </tr>
+      <tr>
+        <td>E-000000004</td>
+        <td>60</td>
+        <td>12</td>
+        <td>68%</td>
+        <td>28%</td>
+        <td>Fail</td>
+        <th><a class="btn btn-primary btn-xs" role="button">view results »</a></th>
+      </tr>
+      <tr>
+        <td>E-000000005</td>
+        <td>60</td>
+        <td>12</td>
+        <td>68%</td>
+        <td>78%</td>
+        <td>Succeded</td>
+        <th><a class="btn btn-primary btn-xs" role="button">view results »</a></th>
+      </tr>
+    </tbody>
+  </table>
+</div>
