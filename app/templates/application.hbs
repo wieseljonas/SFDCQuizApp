@@ -14,13 +14,14 @@
 				<li>{{#link-to 'account'}}Home{{/link-to}}</li>
 				<li>{{#link-to 'register'}}Register{{/link-to}}</li>
 			</ul>
-			{{#if session.isAuthenticated}}
-			<button type="submit" class="btn btn-success"{{ action 'invalidateSession' }}>Logout</button>
+			{{#if isLoggedIn}}
+			<ul class="nav navbar-nav navbar-right">
+			<button type="submit" class="btn btn-success"{{action "logout"}}>Logout</button>
+			</ul>
 			{{else}}
-			{{! login form; the fields must be named "identification" and "password"; the controller action is "authenticate" }}
-			<form {{action 'authenticate' on='submit'}} class="navbar-form navbar-right" role="form">
+			<form {{action "login" on="submit"}} class="navbar-form navbar-right" role="form">
 				<div class="form-group">
-					{{input id='identification' placeholder='Email' class='form-control' value=identification}}
+					{{input id='username' placeholder='Enter Email' class='form-control' value=username}}
 				</div>
 				<div class="form-group">
 					{{input id='password' placeholder='Enter Password' class='form-control' type='password' value=password}}
