@@ -12,11 +12,12 @@ export default Ember.Route.extend({
       var requestdata = '{"action":"Login","useremail":"'+username+'","password":"'+password+'"}';
       window.console.log(requestdata);
       Ember.$.ajax({
-        url: 'https://certprep-developer-edition.ap1.force.com/services/apexrest/Exam',
-        type: 'POST',
-        dataType: 'jsonp', 
-        data:requestdata,
-        headers: {"Content-Type":"application/json; charset=utf-8"},
+        url: "https://certprep-developer-edition.ap1.force.com/services/apexrest/Exam",
+        type: "POST",
+        //dataType: "jsonp", 
+        data: requestdata,
+        // headers: {Content-Type :application/json; charset=utf-8},
+        beforeSend: function(xhr){xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');},
         success: function(resp){
           window.console.log('success');
           window.console.log(resp);
@@ -32,7 +33,7 @@ export default Ember.Route.extend({
           }
         },
         error : function(jqXHR, textStatus, errorThrown) {
-            alert('Error: '+jqXHR.status);
+            window.console.log(jqXHR);
             window.console.log(textStatus);
             window.console.log(errorThrown);
         } 
