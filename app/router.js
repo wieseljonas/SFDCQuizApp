@@ -9,6 +9,7 @@ Router.map(function() {
 	this.route('account');
 	this.route('exam');
   	this.route('application');
+  	this.route('login');
 });
 
 export default Router;

@@ -1,8 +1,8 @@
-{{#my-modal title='New Exam' ok='save' close='removeModal'}}
+{{#custom-modal title='New Exam' ok='save' close='removeModal'}}
   <form {{action 'ok' on='submit' target=view}}>
     <div class="form-group">
       <label>Name</label>
       {{input class="form-control" value=name}}
     </div>
   </form>
-{{/my-modal}}
+{{/custom-modal}}
