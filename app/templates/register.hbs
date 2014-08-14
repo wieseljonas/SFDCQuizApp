@@ -2,7 +2,7 @@
   <div class="container">
     <h2>Register!</h2>
     <p>please provide your email</p>
-    <form  {{action 'register' on="submit"}} class="form-horizontal col-md-6" role="form">
+    <form class="form-horizontal col-md-6" role="form">
       <div class="form-group">
         <label class="col-md-4 control-label" for="textinput">Email</label>
         <div class="col-md-8">
@@ -13,26 +13,27 @@
         </div>
       </div>
       <div class="form-group">
-       <label class="col-md-4 control-label" for="textinput">Password</label>
-       <div class="col-md-8">
-         {{input id='registerpassword' placeholder='Password' class='form-control' value=registerpassword}}
-       </div>
-     </div>
-     <div class="form-group">
-      <label class="col-md-4 control-label" for="textinput">First Name</label>
-      <div class="col-md-8">
-       {{input id='firstName' placeholder='First Name' class='form-control' value=firstName}}
-     </div>
-   </div>
-   <div class="form-group">
-     <label class="col-md-4 control-label" for="textinput">Second Name</label>
-     <div class="col-md-8">
-       {{input id='secondName' placeholder='Second Name' class='form-control' value=secondName}}
-     </div>
-   </div>
-   <p><a type="submit" class="btn btn-primary btn-lg" role="button">Register</a></p>
- </form>
-</div>
+        <label class="col-md-4 control-label" for="textinput">Password</label>
+        <div class="col-md-8">
+          {{input id='registerpassword' type='password' placeholder='Password' class='form-control' value=registerpassword}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="textinput">First Name</label>
+        <div class="col-md-8">
+          {{input id='firstName' placeholder='First Name' class='form-control' value=firstName}}
+        </div>
+      </div>
+      <div class="form-group">
+      <label class="col-md-4 control-label" for="textinput">Second Name</label>
+        <div class="col-md-8">
+          {{input id='secondName' placeholder='Second Name' class='form-control' value=secondName}}
+        </div>
+      </div>
+      <p><a {{action "register"}} type="submit" class="btn btn-primary btn-lg" role="button">Register</a></p>
+    </form>
+    <p><a {{action "test"}} class="btn btn-primary btn-lg" role="button">Test</a></p>
+  </div>
 </div>
 <div class="container">
 </div>

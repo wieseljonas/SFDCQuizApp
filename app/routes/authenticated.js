@@ -7,9 +7,9 @@ export default Ember.Route.extend({
     // or check a cookie, or other state
     if (!localStorage.authToken) {
       applicationController.set('savedTransition', transition);
-      this.transitionTo('login');
+      this.transitionTo('index');
     } else {
-      this.controllerFor('application').login();      
+      //this.controllerFor('application').login();      
     }
   }
 });

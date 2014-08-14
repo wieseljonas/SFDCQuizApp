@@ -15,11 +15,6 @@ export default Ember.Route.extend({
           outlet: 'modal',
           parentView: 'application'
         });
-      },
-      logout: function() {
-          this.controllerFor('application').logout();
-          delete localStorage.authToken;
-          this.transitionTo('login');
       }
     }
 });
