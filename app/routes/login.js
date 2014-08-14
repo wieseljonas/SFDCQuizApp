@@ -3,24 +3,26 @@ import Ember from 'ember';
 export default Ember.Route.extend({
 	actions: {
     login: function() {
-      window.console.log('clicked');
-
       var loginController = this.controllerFor('login'),
       username = loginController.get('username'),
       password = loginController.get('password');
 
       var requestdata = '{"action":"Login","useremail":"'+username+'","password":"'+password+'"}';
-      window.console.log(requestdata);
+      console.log(requestdata);
       Ember.$.ajax({
-        url: "https://certprep-developer-edition.ap1.force.com/services/apexrest/Exam",
+        url: "https://certprep-developer-edition.ap1.force.com/services/apexrest/Exam'",
         type: "POST",
-        //dataType: "jsonp", 
+        // headers: { 'Access-Control-Allow-Origin': '*' },
+        ContentType: "application/json; charset=utf-8",
+        //dataType: "jsonp",
+        //jsonpCallback: 'process',
+        //jsonp: 'callback',
+        //crossDomain: true,
+        //contentType: "application/json",
         data: requestdata,
-        // headers: {Content-Type :application/json; charset=utf-8},
-        beforeSend: function(xhr){xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');},
-        success: function(resp){
+        success : function (data) {
           window.console.log('success');
-          window.console.log(resp);
+          window.console.log(data);
           localStorage.authToken = "auth-token-here";
           console.log(localStorage.authToke);
           var applicationController = this.controllerFor('application');
@@ -32,11 +34,12 @@ export default Ember.Route.extend({
             this.transitionTo('posts');
           }
         },
-        error : function(jqXHR, textStatus, errorThrown) {
+        error : function (jqXHR, textStatus, errorThrown) {
             window.console.log(jqXHR);
             window.console.log(textStatus);
             window.console.log(errorThrown);
         } 
+        //beforeSend: function(xhr){xhr.setRequestHeader('Access-Control-Allow-Origin', '*');    
       });
     }
   }
