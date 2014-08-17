@@ -55,8 +55,8 @@ export default Ember.ArrayController.extend({
 						if (userexams.content.get('length') !== data.get('length')){
 							data.forEach(function(item){
 								var examname = item.Name;
-								store.find('user-exam', { name: examname }).then(function(exam){
-								},function(value) {
+								store.find('user-exam', { name: examname }).then(function(){
+								},function() {
 										store.createRecord('user-exam', {
 											salesforceid : item.Id,
 											name : item.Name,

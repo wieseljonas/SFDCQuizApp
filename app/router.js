@@ -8,9 +8,9 @@ Router.map(function() {
 	this.route('register');
   	this.route('application');
   	this.route('exam');
-  	this.resource('settings');
   	this.route('account');
-  this.route('login');
+  	this.route('login');
+  this.route('settings');
 });
 
 export default Router;

@@ -6,5 +6,6 @@ export default Ember.Route.extend({
 		if (!applicationController.isLoggedIn) {
 			this.transitionTo('index');
 		}
-	} 
+		this.controllerFor('account').send('loadData');
+	}
 });
