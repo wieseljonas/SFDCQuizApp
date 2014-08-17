@@ -19,5 +19,7 @@ var app = new EmberApp();
 
 app.import('vendor/bootstrap/dist/css/bootstrap.css');
 app.import('vendor/bootstrap/dist/js/bootstrap.js');
+app.import("vendor/ember-localstorage-adapter/localstorage_adapter.js");
+
 
 module.exports = app.toTree();

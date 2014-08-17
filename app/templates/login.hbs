@@ -1,0 +1,25 @@
+<div class="jumbotron">
+  <div class="container">
+    <h2>Login!</h2>
+    <form class="form-horizontal col-md-6" role="form">
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="textinput">Email</label>
+        <div class="col-md-8">
+          <div class="input-group">
+            <div class="input-group-addon">@</div>
+            {{input id='loginemail' placeholder='Enter Email' class='form-control' value=loginemail}}
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="textinput">Password</label>
+        <div class="col-md-8">
+          {{input id='loginpassword' type='password' placeholder='Password' class='form-control' value=loginpassword}}
+        </div>
+      </div>
+      <p><a {{action "login"}} type="submit" class="btn btn-primary btn-lg pull-right" role="button">Login</a></p>
+    </form>
+  </div>
+</div>
+<div class="container">
+</div>

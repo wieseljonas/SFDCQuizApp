@@ -7,17 +7,21 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">Cert Prep</a>
+			{{#link-to 'index' classNames="navbar-brand"}}Cert Prep{{/link-to}}
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
+			{{#if isLoggedIn}}
+				<li>{{#link-to 'account'}}My Account{{/link-to}}</li>
+			{{else}}
 				<li>{{#link-to 'application'}}Home{{/link-to}}</li>
 				<li>{{#link-to 'register'}}Register{{/link-to}}</li>
+			{{/if}}
 			</ul>
 			{{#if isLoggedIn}}
-			<ul class="nav navbar-nav navbar-right">
-			<button type="submit" class="btn btn-success"{{action "logout"}}>Logout</button>
-			</ul>
+			<form class="navbar-form navbar-right" role="form">
+				<button type="submit" class="btn btn-success"{{action "logout"}}>Logout</button>
+			</form>
 			{{else}}
 			<form {{action "login" on="submit"}} class="navbar-form navbar-right" role="form">
 				<div class="form-group">

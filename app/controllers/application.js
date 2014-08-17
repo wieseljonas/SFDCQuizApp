@@ -1,38 +1,98 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  currentUser: null,
-  currentToken: null,
   isLoggedIn: false,
-  savedTransition: null,
+  firstName: "",
+  secondName: "",
+  useremail: "",
+  currentToken:"",
   actions: {
+    redirectproctected: function () { 
+      if (this.getProperty('isLoggedIn') === false){
+        this.transitionToRoute('index');
+        console.log('redirect');
+      }
+    },
     logout: function() {
-      this.controllerFor('application').logout();
-      delete localStorage.authToken;
-      this.set('isLoggedIn', false);
+      this.send('deletealldata');
+      this.send('deleteallusers');
+      console.log('removed everything from localStorage');
       this.transitionToRoute('index');
+      this.setProperties({
+        isLoggedIn: false,
+        firstName: "",
+        secondName: ""
+      });
+    },
+    deleteallusers: function() {
+      this.store.findAll('user').then(function(record){
+       record.content.forEach(function(rec) {
+        Ember.run.once(this, function() {
+         rec.deleteRecord();
+         rec.save();
+       });
+      }, this);
+     });
+    },
+    deletealldata: function() {
+      this.store.findAll('exam-type').then(function(record){
+       record.content.forEach(function(rec) {
+        Ember.run.once(this, function() {
+         rec.deleteRecord();
+         rec.save();
+       });
+      }, this);
+      });
+      console.log('deleting user exams');
+       this.store.findAll('user-exam').then(function(record){
+       record.content.forEach(function(rec) {
+        Ember.run.once(this, function() {
+         rec.deleteRecord();
+         rec.save();
+       });
+      }, this);
+     });
+    },
+    deleteExamdData: function() {
+      console.log('deleting user exams');
+       this.store.findAll('user-exam').then(function(record){
+       record.content.forEach(function(rec) {
+        Ember.run.once(this, function() {
+         rec.deleteRecord();
+         rec.save();
+       });
+      }, this);
+     });
     },
     login: function() {
       var username = this.get('username');
       var password = this.get('password');
       var requestdata = '{"action":"Login","useremail":"'+username+'","password":"'+password+'"}';
-      console.log(requestdata);
+      var controller = this;
+      controller.send('deleteallusers');
+      var store = this.store;
       Ember.$.ajax({
-        url: "http://localhost:3123/proxypublic/Exam",
+        url: "http://sfdcnodeproxy.herokuapp.com/proxy/Exam",
         type: "POST",
         contentType: "application/json",
         data: requestdata,
         success : function (data) {
-          if(data.Success !== undefined) {
+          if(data.secretToken !== undefined) {
             window.console.log(data);
-            var transition = this.get('savedTransition');
-            localStorage.authToken = data.Success;
-            this.setProperties({ savedTransition: null, isLoggedIn: true, currentUser: username , currentToken: data.Success });
-            if (this.get('savedTransition')) {
-              transition.retry();
-            } else {
-              this.transitionToRoute('account');
-            }
+            controller.transitionToRoute('account');
+            store.createRecord('user', {
+              useremail: data.userName,
+              currentToken: data.secretToken,
+              firstName: data.firstName,
+              secondName: data.secondName
+            }).save();
+            controller.setProperties({
+             isLoggedIn: true,
+             firstName: data.firstName,
+             secondName: data.secondName,
+             useremail: data.userName,
+             currentToken: data.secretToken,
+           });
           } else {
             window.console.log(data);
           } 
@@ -41,8 +101,8 @@ export default Ember.Controller.extend({
         //window.console.log(jqXHR);
         //window.console.log(textStatus);
         window.console.log(errorThrown);
-      } 
-    });
+        } 
+      });
     }
   }
 });

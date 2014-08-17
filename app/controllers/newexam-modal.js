@@ -1,10 +1,15 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  actions: {
-    logout: function() {
-      alert('logout');
-    }
-  }
+	names: ["loading"],
+  	actions: {
+	    logout: function() {
+	      alert('logout');
+	    }
+  	},
+  	init: function () {
+  		//console.log(this.store.find('exam-type'));
+
+	}
 });
 

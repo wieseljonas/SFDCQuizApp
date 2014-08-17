@@ -1,13 +1,13 @@
 <div class="jumbotron">
   <div class="container">
-    <h2>Welcome to {{controllers.application.currentUser}}!</h2>
-    <p>Start an Exam Now</p>
+    <h2>Welcome {{ controllers.application.firstName }} !</h2>
+    <p>You can an Exam Now</p>
     <p><a {{action 'showModal' 'newexam-modal'}} class="btn btn-primary" role="button">New Exam »</a></p>
   </div>
 </div>
 <div class="container">
   {{outlet}}
-  <table class="table table-striped">
+    <table class="table table-striped">
     <thead>
       <tr>
         <th>Exam ID</th>
@@ -20,33 +20,17 @@
       </tr>
     </thead>
     <tbody>
+    {{#each}}
       <tr>
-        <td>E-000000003</td>
-        <td>60</td>
-        <td>12</td>
-        <td>68%</td>
-        <td>28%</td>
-        <td>Fail</td>
+        <td>{{name}}</td>
+        <td>{{numberOfQuestions}}</td>
+        <td>{{rightAnswers}}</td>
+        <td>{{passingPercentage}}%</td>
+        <td>{{resultPercentage}}%</td>
+        <td>{{result}}</td>
         <th><a class="btn btn-primary btn-xs" role="button">view results »</a></th>
       </tr>
-      <tr>
-        <td>E-000000004</td>
-        <td>60</td>
-        <td>12</td>
-        <td>68%</td>
-        <td>28%</td>
-        <td>Fail</td>
-        <th><a class="btn btn-primary btn-xs" role="button">view results »</a></th>
-      </tr>
-      <tr>
-        <td>E-000000005</td>
-        <td>60</td>
-        <td>12</td>
-        <td>68%</td>
-        <td>78%</td>
-        <td>Succeded</td>
-        <th><a class="btn btn-primary btn-xs" role="button">view results »</a></th>
-      </tr>
+    {{/each}}
     </tbody>
   </table>
 </div>

@@ -6,13 +6,13 @@ export default Ember.Controller.extend({
 			var requestdata = '{"action":"Register","useremail":"'+this.get("useremail")+'","password":"'+this.get("registerpassword")+'","firstName":"'+this.get("firstName")+'","secondName":"'+this.get("secondName")+'"}';
 			window.console.log(requestdata);
 			Ember.$.ajax({
-				url: "http://localhost:3123/proxypublic/Exam",
+				url: "http://sfdcnodeproxy.herokuapp.com/proxypublic/Exam",
 				type:"POST",
 				contentType:"application/json",
 				data:requestdata,
 				success: function(data){
 					window.console.log(data);
-					this.transitionToRoute('application');
+					this.transitionToRoute('index');
 				},
 				error : function (jqXHR, textStatus, errorThrown) {
 		            //window.console.log(jqXHR);
@@ -21,9 +21,6 @@ export default Ember.Controller.extend({
 		        } 
 			});
 		},
-		test: function() {
-			window.console.log('clicked');
-		}
 	}
 	
 });
