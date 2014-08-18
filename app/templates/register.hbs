@@ -30,7 +30,9 @@
           {{input id='secondName' placeholder='Second Name' class='form-control' value=secondName}}
         </div>
       </div>
-      <p><a {{action "register"}} type="submit" class="btn btn-primary btn-lg" role="button">Register</a></p>
+      <p>
+            {{component-loading-button id="registerbutton" classNames="pull-right" isLoading=isLoading buttonText='Register' buttonLoadingText='Registering' action='register'}}
+      </p>
     </form>
   </div>
 </div>

@@ -17,7 +17,7 @@
           {{input id='loginpassword' type='password' placeholder='Password' class='form-control' value=loginpassword}}
         </div>
       </div>
-      <p><a {{action "login"}} type="submit" class="btn btn-primary btn-lg pull-right" role="button">Login</a></p>
+      {{component-loading-button id="loginbutton2" classNames="pull-right" isLoading=isLoading buttonText='Login' buttonLoadingText='Logging in' action='login'}}
     </form>
   </div>
 </div>

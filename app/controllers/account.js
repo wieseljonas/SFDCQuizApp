@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
 	needs: ['application', 'newexam-modal'],
+	isLoading: true,
 	actions:{
 		loadData: function (){
 			console.log(this);
@@ -40,8 +41,9 @@ export default Ember.ArrayController.extend({
 		LoadUserExams: function () {
 			var applicationController = this.get('controllers.application');
 			var store = this.store;
-			//var accountController = this;
+			var accountController = this;
 			var userexams = store.findAll('user-exam');
+			accountController.setProperties ({isLoading: true});
 			userexams.then(function() {
 				var userProperties = applicationController.getProperties('useremail','currentToken');
 				var requestdata = '{ "action": "GetExams","useremail":"'+userProperties.useremail+'","secretToken":"'+userProperties.currentToken+'"}';
@@ -67,9 +69,13 @@ export default Ember.ArrayController.extend({
 											passingPercentage : item.Passing_Percentage__c,
 											examType : item.Exam_Type__r.Name
 										}).save();
+										var requestdata2 = '{ "action": "GetExam","useremail":"'+userProperties.useremail+'","secretToken":"'+userProperties.currentToken+'", "examID":"'+item.Name+'"}';
+										window.console.log(requestdata2);
+										
 								});
 							});
 						}
+						accountController.setProperties ({isLoading: false});
 					},
 					error : function (data) {
 						console.log(data);

@@ -1,0 +1,8 @@
+
+<button {{bind-attr id=id}} {{action 'showLoading'}} class="btn btn-success">
+        {{#if isLoading}}
+            {{buttonLoadingText}} <img src="assets/images/ajaxloadinggreen.gif">
+        {{else}}
+            {{buttonText}}
+        {{/if}}
+</button> 

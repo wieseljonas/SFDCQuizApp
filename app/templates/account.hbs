@@ -7,6 +7,7 @@
 </div>
 <div class="container">
   {{outlet}}
+
     <table class="table table-striped">
     <thead>
       <tr>
@@ -19,8 +20,9 @@
         <th></th>
       </tr>
     </thead>
+
     <tbody>
-    {{#each}}
+     {{#each}}
       <tr>
         <td>{{name}}</td>
         <td>{{numberOfQuestions}}</td>
@@ -28,9 +30,20 @@
         <td>{{passingPercentage}}%</td>
         <td>{{resultPercentage}}%</td>
         <td>{{result}}</td>
-        <th><a class="btn btn-primary btn-xs" role="button">view results »</a></th>
+        <th>{{#link-to 'exam' id class="btn btn-primary btn-xs"}}view results »{{/link-to}}</th>
       </tr>
-    {{/each}}
-    </tbody>
-  </table>
+    {{/each}}   
+    {{#if isLoading}}
+      <tr>
+        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
+        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
+        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
+        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
+        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
+        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
+        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
+      </tr>
+    {{/if}}
+    </tbody>  
+   </table>
 </div>
