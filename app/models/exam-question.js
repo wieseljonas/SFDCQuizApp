@@ -14,5 +14,6 @@ export default DS.Model.extend({
   	solutions : DS.attr('string'),
   	examID : DS.attr('string'),
   	chosenAnswers : DS.attr('string'),
-  	result : DS.attr('string')
+  	result : DS.attr('string'),
+    userexam: DS.belongsTo('user-exam')
 });

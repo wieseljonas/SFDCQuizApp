@@ -9,4 +9,6 @@ export default DS.Model.extend({
   numberOfQuestions : DS.attr('number'),
   rightAnswers : DS.attr('number'),
   passingPercentage : DS.attr('string'),
+  questions: DS.hasMany('exam-question'),
+  examTaker: DS.attr('string'),
 });

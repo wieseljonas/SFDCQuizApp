@@ -7,10 +7,11 @@ var Router = Ember.Router.extend({
 Router.map(function() {
 	this.route('register');
   	this.route('application');
-  	this.resource('exam', { path: '/exam/:exam_name' });
-  	this.route('account');
   	this.route('login');
-  this.route('settings');
+  	this.route('account');
+    this.resource('exam', { path: 'account/:exam_id' });
+    this.resource('takeExam', { path: 'account/exam' });
+  	this.route('settings');
 });
 
 export default Router;

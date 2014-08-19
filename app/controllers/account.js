@@ -22,7 +22,7 @@ export default Ember.ArrayController.extend({
 						data: '{ "action": "GetExamTypes" }',
 						success : function (data) {
 							window.console.log(data);
-							console.log('store'+store);
+							//console.log('store'+store);
 							data.forEach(function(item){
 								console.log(item);
 								store.createRecord('exam-type', {
@@ -53,12 +53,13 @@ export default Ember.ArrayController.extend({
 					contentType: "application/json",
 					data: requestdata,
 					success : function (data) {
-						window.console.log(data);
+						//window.console.log(data);
 						if (userexams.content.get('length') !== data.get('length')){
-							data.forEach(function(item){
+							data.forEach(function (item){
 								var examname = item.Name;
 								store.find('user-exam', { name: examname }).then(function(){
 								},function() {
+										console.log("items"+item);
 										store.createRecord('user-exam', {
 											salesforceid : item.Id,
 											name : item.Name,
@@ -67,11 +68,34 @@ export default Ember.ArrayController.extend({
 											numberOfQuestions : item.Number_of_Questions__c,
 											rightAnswers : item.Right_Answers__c,
 											passingPercentage : item.Passing_Percentage__c,
-											examType : item.Exam_Type__r.Name
+											examType : item.Exam_Type__r.Name,
+											examTaker: item.Exam_Taker__r.Email__c
 										}).save();
-										var requestdata2 = '{ "action": "GetExam","useremail":"'+userProperties.useremail+'","secretToken":"'+userProperties.currentToken+'", "examID":"'+item.Name+'"}';
-										window.console.log(requestdata2);
-										
+										//.save()
+										// .then(function (createdexam){
+										// 	console.log(item.Exam_Questions__r.records);
+										// 	item.Exam_Questions__r.records.forEach(function (question){
+										// 		store.createRecord('exam-question', {
+										// 			question : question.Question__r.Question__c,
+										// 			questionID : question.Name,
+										// 			answer1 : question.Question__r.Answer_1__c,
+										// 			answer2 : question.Question__r.Answer_2__c,
+										// 			answer3 : question.Question__r.Answer_3__c,
+										// 			answer4 : question.Question__r.Answer_4__c,
+										// 			answer5 : question.Question__r.Answer_5__c,
+										// 			answer6 : question.Question__r.Answer_6__c,
+										// 			answer7 : question.Question__r.Answer_7__c,
+										// 			numberOfAnswers : question.Question__r.Number_of_Answers__c,
+										// 			solutions : question.Question__r.Solutions__c,
+										// 			examID : question.Exam_Name__c,
+										// 			chosenAnswers : question.Answer_Chosen__c,
+										// 			result : question.Result__c,
+										// 			userexam : createdexam
+										// 			//store.find('user-exam', {name: item.Name})
+										// 		}).save();
+										//	});
+
+										// });
 								});
 							});
 						}
@@ -83,6 +107,36 @@ export default Ember.ArrayController.extend({
 				});
 			});
 
+		},
+		deleteExam: function(exam){
+			var applicationController = this.get('controllers.application');
+			var store = this.store;
+			var accountController = this;
+			console.log('clicked');
+			console.log(exam);
+			var userProperties = applicationController.getProperties('useremail','currentToken');
+			var requestdata = '{ "action": "DeleteExam","useremail":"'+userProperties.useremail+'","secretToken":"'+userProperties.currentToken+'","examName":"'+exam+'"}';
+			console.log(requestdata);
+			Ember.$.ajax({
+					url: "http://sfdcnodeproxy.herokuapp.com/proxy/Exam",
+					type: "POST",
+					contentType: "application/json",
+					data: requestdata,
+					success : function (data) {
+						window.console.log(data)
+					       	store.find('user-exam',{ name: exam}).then(function(record){
+					       		record.content.forEach(function(rec) {
+					        		Ember.run.once(this, function() {
+					         			rec.deleteRecord();
+					         			rec.save();
+					       			});
+					      		}, this);
+					    	});
+					},
+					error : function (data) {
+						console.log(data);
+					}
+			});
 		},
 		deleteExamData: function() {
 			console.log('deleting user exams');

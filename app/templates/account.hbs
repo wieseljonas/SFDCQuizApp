@@ -30,18 +30,19 @@
         <td>{{passingPercentage}}%</td>
         <td>{{resultPercentage}}%</td>
         <td>{{result}}</td>
-        <th>{{#link-to 'exam' name class="btn btn-primary btn-xs"}}view results »{{/link-to}}</th>
+        <th>{{#link-to 'exam' this class="btn btn-primary btn-xs"}}view results »{{/link-to}}
+        <a {{action "deleteExam" name}} type="submit" class="btn btn-danger btn-xs" role="button"> X </a></th>
       </tr>
     {{/each}}   
     {{#if isLoading}}
       <tr>
         <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
-        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
-        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
-        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
-        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
-        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
-        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
     {{/if}}
     </tbody>  

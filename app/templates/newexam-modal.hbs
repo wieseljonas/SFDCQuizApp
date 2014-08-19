@@ -3,10 +3,17 @@
 <form>
 	<div class="form-group">
 		<div class="input-group">
+		{{#if isNull}}
+		<div class="alert alert-warning" role="alert">Please select an exam type!</div>
+		{{/if}}
 			<label>Select Exam Type</label>
-			{{view Ember.Select content=names class="form-control"}}
+			{{view Ember.Select content=names value=selectedname prompt="Please select a exam type" class="form-control"}}
+
+
 		</div>
 	</div>
+	<!-- {{component-loading-button id="startExam" isLoading=isLoading buttonText='Start Exam' buttonLoadingText='Loading Exam' action='startExam'}} -->
+	<a {{action "startExam"}} type="submit" class="btn btn-primary" role="button">Start Exam</a>
 	<!-- <p><a {{action "startExam"}} type="submit" class="btn btn-primary" role="button">Start Exam</a></p> -->
 </form>
 {{/custom-modal}}

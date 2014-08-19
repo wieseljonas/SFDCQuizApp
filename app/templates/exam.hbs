@@ -1,7 +1,32 @@
 <div class="jumbotron">
   <div class="container">
-    <h2>This is Exam: {{ Id }} !</h2>
+    <h2>This is Exam: {{ name }} !</h2>
   </div>
 </div>
 <div class="container">
+	<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Answers</th>
+        <th>Solution</th>
+      </tr>
+    </thead>
+    <tbody>
+     {{#each question in questions}}
+      <tr>
+        <td>{{question.question}}</td>
+        <td>{{question.chosenAnswers}}</td>
+        <td>{{question.solutions}}</td>
+      </tr>
+    {{/each}}
+    {{#if isLoading}}
+      <tr>
+        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
+        <td></td>
+        <td></td>
+      </tr>
+    {{/if}}
+    </tbody>
+    </table>
 </div>
