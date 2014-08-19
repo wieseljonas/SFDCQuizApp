@@ -7,9 +7,10 @@
 	<table class="table table-striped">
     <thead>
       <tr>
-        <th>Question</th>
-        <th>Answers</th>
-        <th>Solution</th>
+        <th class="col-md-6">Question</th>
+        <th class="col-md-2">Answers</th>
+        <th class="col-md-2">Solution</th>
+        <th class="col-md-2">Result</th>
       </tr>
     </thead>
     <tbody>
@@ -18,11 +19,13 @@
         <td>{{question.question}}</td>
         <td>{{question.chosenAnswers}}</td>
         <td>{{question.solutions}}</td>
+        <td>{{question.result}}</td>
       </tr>
     {{/each}}
     {{#if isLoading}}
       <tr>
         <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
+        <td></td>
         <td></td>
         <td></td>
       </tr>

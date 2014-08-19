@@ -64,15 +64,16 @@ export default Ember.Controller.extend({
        });
       }, this);
      });
-       console.log('deleting user exam questions');
-       this.store.findAll('exam-question').then(function(record){
-       record.content.forEach(function(rec) {
-        Ember.run.once(this, function() {
-         rec.deleteRecord();
-         rec.save();
-       });
-      }, this);
-     });
+      this.store.unloadAll('exam-question');
+     //   console.log('deleting user exam questions');
+     //   this.store.findAll('exam-question').then(function(record){
+     //   record.content.forEach(function(rec) {
+     //    Ember.run.once(this, function() {
+     //     rec.deleteRecord();
+     //     rec.save();
+     //   });
+     //  }, this);
+     // });
     },
     deleteExamData: function() {
       console.log('deleting user exams');
