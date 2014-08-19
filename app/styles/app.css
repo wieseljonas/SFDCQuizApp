@@ -1,11 +1,9 @@
-html, body {
-  margin: 20px;
-}
 .ember-notify-cn {
-	position: fixed;
+/*	position: fixed;
 	z-index: 5000;
-	top: 50px;
+	
 	right: 40%;
 	pointer-events: none;
-	left: 40%;
+	left: 40%;*/
+	top: 50px;
 }

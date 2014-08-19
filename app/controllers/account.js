@@ -123,7 +123,7 @@ export default Ember.ArrayController.extend({
 					contentType: "application/json",
 					data: requestdata,
 					success : function (data) {
-						window.console.log(data)
+						window.console.log(data);
 					       	store.find('user-exam',{ name: exam}).then(function(record){
 					       		record.content.forEach(function(rec) {
 					        		Ember.run.once(this, function() {

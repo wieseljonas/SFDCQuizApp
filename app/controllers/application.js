@@ -138,6 +138,7 @@ export default Ember.Controller.extend({
                       closeAfter: 10000 // or set to null to disable auto-hiding
                 });
             }
+            applicationController.setProperties({isLoading: false});
           }
         });
       } else {
