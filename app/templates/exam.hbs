@@ -4,32 +4,34 @@
   </div>
 </div>
 <div class="container">
-	<table class="table table-striped">
-    <thead>
-      <tr>
-        <th class="col-md-6">Question</th>
-        <th class="col-md-2">Answers</th>
-        <th class="col-md-2">Solution</th>
-        <th class="col-md-2">Result</th>
-      </tr>
-    </thead>
-    <tbody>
-     {{#each question in questions}}
-      <tr>
-        <td>{{question.question}}</td>
-        <td>{{question.chosenAnswers}}</td>
-        <td>{{question.solutions}}</td>
-        <td>{{question.result}}</td>
-      </tr>
-    {{/each}}
-    {{#if isLoading}}
-      <tr>
-        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    {{/if}}
-    </tbody>
-    </table>
+	<div class="table-responsive">
+		<table class="table table-striped">
+		    <thead>
+		      <tr>
+		        <th class="col-md-6">Question</th>
+		        <th class="col-md-2">Answers</th>
+		        <th class="col-md-2">Solution</th>
+		        <th class="col-md-2">Result</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		     {{#each question in questions}}
+		      <tr>
+		        <td>{{question.question}}</td>
+		        <td>{{question.chosenAnswers}}</td>
+		        <td>{{question.solutions}}</td>
+		        <td>{{question.result}}</td>
+		      </tr>
+		    {{/each}}
+		    {{#if isLoading}}
+		      <tr>
+		        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
+		        <td></td>
+		        <td></td>
+		        <td></td>
+		      </tr>
+		    {{/if}}
+		    </tbody>
+	    </table>
+    </div>
 </div>
