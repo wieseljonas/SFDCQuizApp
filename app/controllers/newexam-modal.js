@@ -51,7 +51,7 @@ export default Ember.Controller.extend({
 											passingPercentage : data.Passing_Percentage__c,
 											examType : data.Exam_Type__r.Name,
 											examTaker: data.Exam_Taker__r.Email__c
-										}).save().then(function (createdexam){
+										}).then(function (createdexam){
 											console.log(data.Exam_Questions__r.records);
 											data.Exam_Questions__r.records.forEach(function (question){
 												store.createRecord('exam-question', {
@@ -69,9 +69,11 @@ export default Ember.Controller.extend({
 													examID : question.Exam_Name__c,
 													chosenAnswers : question.Answer_Chosen__c,
 													result : question.Result__c,
+													questionIndex : question.Index__c,
+													lastUpdated: moment(question.LastModifiedDate),
 													userexam : createdexam
 													//store.find('user-exam', {name: item.Name})
-												}).save();
+												});
 											});
 
 										});

@@ -11,6 +11,7 @@
 		<table class="table table-striped">
 		    <thead>
 		      <tr>
+            <th class="col-md-1">Index</th>
 		        <th class="col-md-6">Question</th>
 		        <th class="col-md-2">Answers</th>
 		        <th class="col-md-2">Solution</th>
@@ -21,11 +22,12 @@
 		    <tbody>
 		     {{#each question in questions}}
 		      <tr>
+            <th>{{question.questionIndex}}</th>
 		        <td>{{question.question}}</td>
 		        <td>{{question.chosenAnswers}}</td>
 		        <td>{{question.solutions}}</td>
 		        <td>{{question.result}}</td>
-		        <td><a {{action "viewQuestion" question.id}} class="btn btn-primary btn-xs" role="button">View Question</a></td>
+		        <td>{{#link-to 'question' question.id class="btn btn-primary btn-xs"}}View Question{{/link-to}}</td>
 		      </tr>
 		    {{/each}}
 		    {{#if isLoading}}

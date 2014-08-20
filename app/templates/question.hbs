@@ -1,0 +1,54 @@
+<div class="jumbotron jumbotron-small">
+  <div class="container">
+    	<a {{action "previousQuestion" id}} class="btn btn-primary " role="button">Previous question</a>
+    	{{#link-to 'exam' userexam class="btn btn-success"}}Question Index{{/link-to}}
+    	<a {{action "stopExam" id}} class="btn btn-danger " role="button">Stop Exam</a>
+    	<a {{action "nextQuestion" id}} class="btn btn-primary pull-right" role="button">Next question</a>
+  </div>
+</div>
+
+<div class="container">
+	<h2>{{question}}</h1>
+	{{#if answer1}}
+	<div class="checkbox">
+		<label>
+			{{input type="checkbox" name="answer 1"}}{{answer1}}
+		</label>
+	</div>
+	{{/if}}
+	{{#if answer2}}
+	<div class="checkbox">
+		<label>
+			{{input type="checkbox" name="answer 2"}}{{answer2}}
+		</label>
+	</div>
+	{{/if}}
+	{{#if answer3}}
+	<div class="checkbox">
+		<label>
+			{{input type="checkbox" name="answer 3"}}{{answer3}}
+		</label>
+	</div>
+	{{/if}}
+	{{#if answer4}}
+	<div class="checkbox">
+		<label>
+			{{input type="checkbox" name="answer 4"}}{{answer4}}
+		</label>
+	</div>
+	{{/if}}
+	{{#if answer5}}
+	<div class="checkbox">
+		<label>
+			{{input type="checkbox" name="answer 5"}}{{answer5}}
+		</label>
+	</div>
+	{{/if}}
+	{{#if answer6}}
+	<div class="checkbox">
+		<label>
+			{{input type="checkbox" name="answer 6"}}{{answer6}}
+		</label>
+	</div>
+	{{/if}}
+</div>

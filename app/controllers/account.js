@@ -70,8 +70,9 @@ export default Ember.ArrayController.extend({
 											rightAnswers : item.Right_Answers__c,
 											passingPercentage : item.Passing_Percentage__c,
 											examType : item.Exam_Type__r.Name,
-											examTaker: item.Exam_Taker__r.Email__c
-										}).save();
+											examTaker: item.Exam_Taker__r.Email__c,
+											lastUpdated: moment(item.LastModifiedDate)
+										});
 										//.save()
 										// .then(function (createdexam){
 										// 	console.log(item.Exam_Questions__r.records);

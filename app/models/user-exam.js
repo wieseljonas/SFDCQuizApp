@@ -11,4 +11,5 @@ export default DS.Model.extend({
   passingPercentage : DS.attr('string'),
   questions: DS.hasMany('exam-question'),
   examTaker: DS.attr('string'),
+  lastUpdated: DS.attr('moment')
 });

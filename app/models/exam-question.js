@@ -10,10 +10,12 @@ export default DS.Model.extend({
   	answer5 : DS.attr('string'),
   	answer6 : DS.attr('string'),
   	answer7 : DS.attr('string'),
+  	questionIndex: DS.attr('number'),
   	numberOfAnswers : DS.attr('number'),
   	solutions : DS.attr('string'),
   	examID : DS.attr('string'),
   	chosenAnswers : DS.attr('string'),
   	result : DS.attr('string'),
-    userexam: DS.belongsTo('user-exam')
+    userexam: DS.belongsTo('user-exam'),
+    lastUpdated: DS.attr('moment')
 });
