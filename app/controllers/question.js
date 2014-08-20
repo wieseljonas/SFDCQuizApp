@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-	// previousQuestion:"",
-	// nextQuestion: "",
+	previousQuestion:"",
+	nextQuestion: "",
 	actions: {
 		setIndex: function (question){
 			var ExamID = question.get('userexam');
@@ -13,7 +13,7 @@ export default Ember.ObjectController.extend({
 			// });
 			console.log(question.get('questionIndex'));
 			console.log(questions);
-			console.log(previousQuestion);
+			//console.log(previousQuestion);
 			console.log(ExamID);
 
 		}
