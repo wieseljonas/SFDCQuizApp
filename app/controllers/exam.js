@@ -52,6 +52,9 @@ export default Ember.ObjectController.extend({
 						});
 				});
 			
+		},
+		viewQuestion: function(id){
+			console.log(id);
 		}
 	}
 });

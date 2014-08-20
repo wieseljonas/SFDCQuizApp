@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.ArrayController.extend({
 	needs: ['application', 'newexam-modal'],
 	isLoading: true,
+	isDeleting: true,
 	actions:{
 		loadData: function (){
 			console.log(this);
@@ -112,6 +113,7 @@ export default Ember.ArrayController.extend({
 			var applicationController = this.get('controllers.application');
 			var store = this.store;
 			var accountController = this;
+			accountController.setProperties ({isDeleting: true});
 			console.log('clicked');
 			console.log(exam);
 			var userProperties = applicationController.getProperties('useremail','currentToken');
@@ -132,9 +134,11 @@ export default Ember.ArrayController.extend({
 					       			});
 					      		}, this);
 					    	});
+					    	accountController.setProperties ({isLoading: false});
 					},
 					error : function (data) {
 						console.log(data);
+						
 					}
 			});
 		},

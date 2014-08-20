@@ -1,9 +1,12 @@
-<div class="jumbotron">
+<div class="jumbotron jumbotron-small">
   <div class="container">
-    <h2>This is Exam: {{ name }} !</h2>
+    	{{#link-to 'account' classNames='btn btn-primary' tagName='button' }}Back to exams{{/link-to}}
+    	{{#link-to 'account' classNames='btn btn-primary pull-right' tagName='button' }}To question view{{/link-to}}
   </div>
 </div>
+
 <div class="container">
+
 	<div class="table-responsive">
 		<table class="table table-striped">
 		    <thead>
@@ -12,6 +15,7 @@
 		        <th class="col-md-2">Answers</th>
 		        <th class="col-md-2">Solution</th>
 		        <th class="col-md-2">Result</th>
+		        <th class="col-md-2"></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -21,11 +25,13 @@
 		        <td>{{question.chosenAnswers}}</td>
 		        <td>{{question.solutions}}</td>
 		        <td>{{question.result}}</td>
+		        <td><a {{action "viewQuestion" question.id}} class="btn btn-primary btn-xs" role="button">View Question</a></td>
 		      </tr>
 		    {{/each}}
 		    {{#if isLoading}}
 		      <tr>
 		        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
+		        <td></td>
 		        <td></td>
 		        <td></td>
 		        <td></td>

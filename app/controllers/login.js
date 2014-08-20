@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
 			var applicationController = this.get('controllers.application');
 			var loginController = this;
 			loginController.setProperties({isLoading: true});
-			var username = loginController.get('loginemail');
+			var username = loginController.get('loginemail').toLowerCase();
 			var password = loginController.get('loginpassword');
 			var requestdata = '{"action":"Login","useremail":"'+username+'","password":"'+password+'"}';
 			applicationController.send('deleteallusers');

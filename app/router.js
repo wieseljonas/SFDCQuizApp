@@ -9,7 +9,9 @@ Router.map(function() {
   	this.route('application');
   	this.route('login');
   	this.route('account');
-    this.resource('exam', { path: 'account/:exam_id' });
+    this.resource('exam', { path: 'account/:exam_id' } , function() {
+	     this.resource('question', { path: ':question_id' });
+	  });
     this.resource('takeExam', { path: 'account/exam' });
   	this.route('settings');
 });

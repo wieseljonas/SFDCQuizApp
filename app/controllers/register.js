@@ -17,7 +17,7 @@ export default Ember.Controller.extend({
 				});
 				registerController.setProperties({isLoading: false});	
 			} else {
-				var requestdata = '{"action":"Register","useremail":"'+registerController.get("useremail")+'","password":"'+registerController.get("registerpassword")+'","firstName":"'+registerController.get("firstName")+'","secondName":"'+registerController.get("secondName")+'"}';
+				var requestdata = '{"action":"Register","useremail":"'+registerController.get("useremail").toLowerCase()+'","password":"'+registerController.get("registerpassword")+'","firstName":"'+registerController.get("firstName")+'","secondName":"'+registerController.get("secondName")+'"}';
 				window.console.log(requestdata);	
 				Ember.$.ajax({
 					url: "http://sfdcnodeproxy.herokuapp.com/proxypublic/Exam",

@@ -89,7 +89,7 @@ export default Ember.Controller.extend({
     login: function() {
       var applicationController = this;
       applicationController.setProperties({isLoading: true});
-      var username = applicationController.get('username');
+      var username = applicationController.get('username').toLowerCase();
       var password = applicationController.get('password');
       if ( applicationController.get("username") || applicationController.get("password")  !== undefined) {
         var requestdata = '{"action":"Login","useremail":"'+username+'","password":"'+password+'"}';
