@@ -103,10 +103,10 @@ export default Ember.Controller.extend({
           data: requestdata,
           success : function (data) {
             console.log(data);
-            Notify.success("Login Successful! Loading your personal data.", {
-                      closeAfter: 10000 // or set to null to disable auto-hiding
-            }); 
             if(data.secretToken !== undefined) {
+                Notify.success("Login Successful! Loading your personal data.", {
+                        closeAfter: 10000 // or set to null to disable auto-hiding
+              });
               applicationController.transitionToRoute('account');
               store.createRecord('user', {
                 useremail: data.userName,
@@ -129,7 +129,7 @@ export default Ember.Controller.extend({
             } 
                 applicationController.setProperties({isLoading: false});           
           },
-          error : function (jqXHR, textStatus, errorThrown) {
+          error : function (jqXHR) {
           //window.console.log(jqXHR);
           //window.console.log(textStatus);
             window.console.log(jqXHR);

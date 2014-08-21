@@ -1,53 +1,56 @@
 <div class="jumbotron jumbotron-small">
   <div class="container">
-    	<a {{action "previousQuestion" id}} class="btn btn-primary " role="button">Previous question</a>
+  		{{#link-to 'question' previousQuestion class="btn btn-primary"}}Previous question{{/link-to}}
     	{{#link-to 'exam' userexam class="btn btn-success"}}Question Index{{/link-to}}
     	<a {{action "stopExam" id}} class="btn btn-danger " role="button">Stop Exam</a>
-    	<a {{action "nextQuestion" id}} class="btn btn-primary pull-right" role="button">Next question</a>
+    	{{#link-to 'question' nextQuestion class="btn btn-primary pull-right"}}Next question{{/link-to}}
   </div>
 </div>
 
 <div class="container">
-	<h2>{{question}}</h1>
+	<h4 class='text-center'>Question {{questionIndex}}</h4>
+	<br/>
+	<h2>{{question}}</h2>
+	<br/>
 	{{#if answer1}}
 	<div class="checkbox">
 		<label>
-			{{input type="checkbox" name="answer 1"}}{{answer1}}
+			{{input type="checkbox" name="answer 1" checked=isAnswer1}}{{answer1}}
 		</label>
 	</div>
 	{{/if}}
 	{{#if answer2}}
 	<div class="checkbox">
 		<label>
-			{{input type="checkbox" name="answer 2"}}{{answer2}}
+			{{input type="checkbox" name="answer 2" checked=isAnswer2}}{{answer2}}
 		</label>
 	</div>
 	{{/if}}
 	{{#if answer3}}
 	<div class="checkbox">
 		<label>
-			{{input type="checkbox" name="answer 3"}}{{answer3}}
+			{{input type="checkbox" name="answer 3" checked=isAnswer3}}{{answer3}}
 		</label>
 	</div>
 	{{/if}}
 	{{#if answer4}}
 	<div class="checkbox">
 		<label>
-			{{input type="checkbox" name="answer 4"}}{{answer4}}
+			{{input type="checkbox" name="answer 4" checked=isAnswer4}}{{answer4}}
 		</label>
 	</div>
 	{{/if}}
 	{{#if answer5}}
 	<div class="checkbox">
 		<label>
-			{{input type="checkbox" name="answer 5"}}{{answer5}}
+			{{input type="checkbox" name="answer 5" checked=isAnswer5}}{{answer5}}
 		</label>
 	</div>
 	{{/if}}
 	{{#if answer6}}
 	<div class="checkbox">
 		<label>
-			{{input type="checkbox" name="answer 6"}}{{answer6}}
+			{{input type="checkbox" name="answer 6" checked=isAnswer6}}{{answer6}}
 		</label>
 	</div>
 	{{/if}}

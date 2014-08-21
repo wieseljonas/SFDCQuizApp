@@ -4,9 +4,14 @@ export default Ember.ObjectController.extend({
 	needs: ['application'],
 	isLoading: false,
 	examID:'',
+	questions: (function() {
+	    return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
+		      sortProperties: ['questionIndex'],
+		      content: this.get('content.questions')
+		});
+	}).property('content.questions'),
 	actions: {
 		loadData: function (examID) {
-			console.log(examID);
 			var applicationController = this.get('controllers.application');
 			var examController = this;
 			var store = examController.store;
@@ -44,8 +49,10 @@ export default Ember.ObjectController.extend({
 									answer7 : question.Question__r.Answer_7__c,
 									numberOfAnswers : question.Question__r.Number_of_Answers__c,
 									solutions : question.Question__r.Solutions__c,
+									solutionsArray: question.Question__r.Solutions__c.replace(/;/g, ',').split(','),
 									examID : question.Exam_Name__c,
 									chosenAnswers : question.Answer_Chosen__c,
+									chosenAnswersArray : question.Answer_Chosen__c.replace(/;/g, ',').split(','),
 									result : question.Result__c,
 									questionIndex : question.Index__c,
 									userexam: exam,

@@ -13,8 +13,10 @@ export default DS.Model.extend({
   	questionIndex: DS.attr('number'),
   	numberOfAnswers : DS.attr('number'),
   	solutions : DS.attr('string'),
+  	solutionsArray : DS.attr('array'),
   	examID : DS.attr('string'),
   	chosenAnswers : DS.attr('string'),
+  	chosenAnswersArray : DS.attr('array'),
   	result : DS.attr('string'),
     userexam: DS.belongsTo('user-exam'),
     lastUpdated: DS.attr('moment')
