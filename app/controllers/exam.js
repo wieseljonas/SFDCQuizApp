@@ -52,7 +52,7 @@ export default Ember.ObjectController.extend({
 									solutionsArray: question.Question__r.Solutions__c.replace(/;/g, ',').split(','),
 									examID : question.Exam_Name__c,
 									chosenAnswers : question.Answer_Chosen__c,
-									chosenAnswersArray : question.Answer_Chosen__c.replace(/;/g, ',').split(','),
+									chosenAnswersArray : function () {if (question.Answer_Chosen__c !== undefined) { return question.Answer_Chosen__c.replace(/;/g, ',').split(',');} else  { return '';}},
 									result : question.Result__c,
 									questionIndex : question.Index__c,
 									userexam: exam,
