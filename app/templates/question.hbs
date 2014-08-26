@@ -12,6 +12,14 @@
 	<br/>
 	<h2>{{question}}</h2>
 	<br/>
+
+	{{#each a in answer}}
+	<div class="checkbox">
+		<label>
+			{{input type="checkbox" name="answer 1"}}{{a}}
+		</label>
+	</div>
+	{{/each}}
 	{{#if answer1}}
 	<div class="checkbox">
 		<label>

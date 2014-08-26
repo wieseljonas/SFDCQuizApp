@@ -37,23 +37,16 @@ export default Ember.ObjectController.extend({
 							console.log('first load');
 							exam.set("lastUpdated", moment(data.LastModifiedDate));
 							data.Exam_Questions__r.records.forEach(function(question){
+								console.log(question.Answer__c);
 								store.createRecord('exam-question', {
 									question : question.Question__r.Question__c,
 									questionID : question.Name,
-									answer1 : question.Question__r.Answer_1__c,
-									answer2 : question.Question__r.Answer_2__c,
-									answer3 : question.Question__r.Answer_3__c,
-									answer4 : question.Question__r.Answer_4__c,
-									answer5 : question.Question__r.Answer_5__c,
-									answer6 : question.Question__r.Answer_6__c,
-									answer7 : question.Question__r.Answer_7__c,
-									numberOfAnswers : question.Question__r.Number_of_Answers__c,
-									solutions : question.Question__r.Solutions__c,
-									solutionsArray: question.Question__r.Solutions__c.replace(/;/g, ',').split(','),
+									answer : question.Answer__c,
+									solution : question.Solution__c,
+									solutionArray: question.Solution__c.replace(/\\/g, ''),
+									answerArray : question.Answer__c,
 									examID : question.Exam_Name__c,
-									chosenAnswers : question.Answer_Chosen__c,
-									chosenAnswersArray : function () {if (question.Answer_Chosen__c !== undefined) { return question.Answer_Chosen__c.replace(/;/g, ',').split(',');} else  { return '';}},
-									result : question.Result__c,
+									isCorrect : question.Is_Correct__c,
 									questionIndex : question.Index__c,
 									userexam: exam,
 									lastUpdated: moment(question.LastModifiedDate)
@@ -81,18 +74,14 @@ export default Ember.ObjectController.extend({
 								store.createRecord('exam-question', {
 									question : question.Question__r.Question__c,
 									questionID : question.Name,
-									answer1 : question.Question__r.Answer_1__c,
-									answer2 : question.Question__r.Answer_2__c,
-									answer3 : question.Question__r.Answer_3__c,
-									answer4 : question.Question__r.Answer_4__c,
-									answer5 : question.Question__r.Answer_5__c,
-									answer6 : question.Question__r.Answer_6__c,
-									answer7 : question.Question__r.Answer_7__c,
-									numberOfAnswers : question.Question__r.Number_of_Answers__c,
-									solutions : question.Question__r.Solutions__c,
+									answer : question.Answer__c,
+									
+									solution : question.Solution__c,
+									answerArray : question.Answer__c,
+									solutionArray: question.Solution__c.replace(/\\/g, ''),
 									examID : question.Exam_Name__c,
-									chosenAnswers : question.Answer_Chosen__c,
-									result : question.Result__c,
+									isCorrect : question.Is_Correct__c,
+									questionIndex : question.Index__c,
 									userexam: exam,
 									lastUpdated: moment(question.LastModifiedDate)
 								});

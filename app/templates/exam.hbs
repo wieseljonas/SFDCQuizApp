@@ -13,8 +13,8 @@
 		      <tr>
             <th class="col-md-1">Index</th>
 		        <th class="col-md-6">Question</th>
-		        <th class="col-md-2">Answers</th>
-		        <th class="col-md-2">Solution</th>
+<!-- 		        <th class="col-md-2">Answers</th>
+		        <th class="col-md-2">Solution</th> -->
 		        <th class="col-md-2">Result</th>
 		        <th class="col-md-2"></th>
 		      </tr>
@@ -24,9 +24,9 @@
 		      <tr>
             <th>{{question.questionIndex}}</th>
 		        <td>{{question.question}}</td>
-		        <td>{{question.chosenAnswers}}</td>
-		        <td>{{question.solutions}}</td>
-		        <td>{{question.result}}</td>
+<!-- 		        <td>{{question.chosenAnswers}}</td>
+		        <td>{{question.solutions}}</td> -->
+		        <td>{{question.isCorrect}}</td>
 		        <td>{{#link-to 'question' question.id class="btn btn-primary btn-xs"}}View Question{{/link-to}}</td>
 		      </tr>
 		    {{/each}}
@@ -34,8 +34,8 @@
 		      <tr>
 		        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
 		        <td></td>
-		        <td></td>
-		        <td></td>
+<!-- 		        <td></td>
+		        <td></td> -->
 		        <td></td>
 		      </tr>
 		    {{/if}}
