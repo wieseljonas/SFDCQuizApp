@@ -2,64 +2,57 @@
   <div class="container">
   		{{#link-to 'question' previousQuestion class="btn btn-primary"}}Previous question{{/link-to}}
     	{{#link-to 'exam' userexam class="btn btn-success"}}Question Index{{/link-to}}
+    	{{#unless userexam.isCompleted}}
     	<a {{action "stopExam" id}} class="btn btn-danger " role="button">Stop Exam</a>
+    	{{/unless}}
     	{{#link-to 'question' nextQuestion class="btn btn-primary pull-right"}}Next question{{/link-to}}
   </div>
 </div>
 
 <div class="container">
 	<h4 class='text-center'>Question {{questionIndex}}</h4>
+	
 	<br/>
 	<h2>{{question}}</h2>
 	<br/>
-
-	{{#each a in answer}}
-	<div class="checkbox">
-		<label>
-			{{input type="checkbox" name="answer 1"}}{{a}}
-		</label>
-	</div>
-	{{/each}}
-	{{#if answer1}}
-	<div class="checkbox">
-		<label>
-			{{input type="checkbox" name="answer 1" checked=isAnswer1}}{{answer1}}
-		</label>
-	</div>
-	{{/if}}
-	{{#if answer2}}
-	<div class="checkbox">
-		<label>
-			{{input type="checkbox" name="answer 2" checked=isAnswer2}}{{answer2}}
-		</label>
-	</div>
-	{{/if}}
-	{{#if answer3}}
-	<div class="checkbox">
-		<label>
-			{{input type="checkbox" name="answer 3" checked=isAnswer3}}{{answer3}}
-		</label>
-	</div>
-	{{/if}}
-	{{#if answer4}}
-	<div class="checkbox">
-		<label>
-			{{input type="checkbox" name="answer 4" checked=isAnswer4}}{{answer4}}
-		</label>
-	</div>
-	{{/if}}
-	{{#if answer5}}
-	<div class="checkbox">
-		<label>
-			{{input type="checkbox" name="answer 5" checked=isAnswer5}}{{answer5}}
-		</label>
-	</div>
-	{{/if}}
-	{{#if answer6}}
-	<div class="checkbox">
-		<label>
-			{{input type="checkbox" name="answer 6" checked=isAnswer6}}{{answer6}}
-		</label>
-	</div>
-	{{/if}}
+	{{#if userexam.isCompleted}}
+		<h4 class='text-center'>Chosen Answer</h4>
+		{{#if userexam.isCompleted}}
+		<div class='text-center'>
+		{{#if isCorrect}}
+		<span class="btn btn-success btn-lg">Right</span>
+		{{else}}
+		<span class="btn btn-danger btn-lg">Wrong</span>
+		{{/if}}
+		</div>
+		{{/if}}
+		{{#each a in answers}}
+		<div class="checkbox">
+			<label>			
+	    		{{input type="checkbox" checked=a.chosenAnswer name=answer.id disabled=true}}{{a.choice}}
+			</label>
+		</div>
+	    
+		{{/each}}
+		<br/>
+	    <h4 class='text-center'>Solution</h4>
+	
+		{{#each a in answers}}
+			<div class="checkbox">
+				<label>
+		    		{{input type="checkbox" checked=a.solution disabled=true}}{{a.choice}}
+				</label>
+			</div>
+		{{/each}}
+	{{else}}
+		{{#each a in answers}}
+		<div class="checkbox">
+			<label>
+	    		{{input type="checkbox" checked=a.chosenAnswer name=a.id}}{{a.choice}}
+			</label>
+		</div>
+	    
+		{{/each}}
+		<a {{action "submitAnswer" id}} class="btn btn-success pull-right" role="button">Submit</a>
+   	{{/if}}
 </div>

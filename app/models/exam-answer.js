@@ -7,4 +7,6 @@ export default DS.Model.extend({
   	isCorrect : DS.attr('boolean'),
     solution : DS.attr('boolean'),
     question : DS.belongsTo('exam-question'),
+    questionID : DS.attr('string'),
+	lastUpdated: DS.attr('moment')
 });

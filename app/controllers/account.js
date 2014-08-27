@@ -55,15 +55,15 @@ export default Ember.ArrayController.extend({
 					data: requestdata,
 					success : function (data) {
 						//window.console.log(data);
-						if (userexams.content.get('length') !== data.get('length')){
-							data.forEach(function (item){
-								var examname = item.Name;
-								store.find('user-exam', { name: examname }).then(function(){
-								},function() {
-										console.log("items"+item);
+						data.forEach(function (item){
+							console.log(store.getById('user-exam', item.Name));
+								if (store.getById('user-exam', item.Name) === null) {
 										store.createRecord('user-exam', {
 											salesforceid : item.Id,
 											name : item.Name,
+											id: item.Name,
+											isCompleted: item.Is_Completed__c,
+											timeLeft : item.Time_Left__c,
 											resultPercentage : item.Exam_Result_Percentage__c,
 											result : item.Exam_Result__c,
 											numberOfQuestions : item.Number_of_Questions__c,
@@ -73,34 +73,21 @@ export default Ember.ArrayController.extend({
 											examTaker: item.Exam_Taker__r.Email__c,
 											lastUpdated: moment(item.LastModifiedDate)
 										});
-										//.save()
-										// .then(function (createdexam){
-										// 	console.log(item.Exam_Questions__r.records);
-										// 	item.Exam_Questions__r.records.forEach(function (question){
-										// 		store.createRecord('exam-question', {
-										// 			question : question.Question__r.Question__c,
-										// 			questionID : question.Name,
-										// 			answer1 : question.Question__r.Answer_1__c,
-										// 			answer2 : question.Question__r.Answer_2__c,
-										// 			answer3 : question.Question__r.Answer_3__c,
-										// 			answer4 : question.Question__r.Answer_4__c,
-										// 			answer5 : question.Question__r.Answer_5__c,
-										// 			answer6 : question.Question__r.Answer_6__c,
-										// 			answer7 : question.Question__r.Answer_7__c,
-										// 			numberOfAnswers : question.Question__r.Number_of_Answers__c,
-										// 			solutions : question.Question__r.Solutions__c,
-										// 			examID : question.Exam_Name__c,
-										// 			chosenAnswers : question.Answer_Chosen__c,
-										// 			result : question.Result__c,
-										// 			userexam : createdexam
-										// 			//store.find('user-exam', {name: item.Name})
-										// 		}).save();
-										//	});
-
-										// });
-								});
+								} else if (!moment(item.LastModifiedDate).isSame(store.getById('user-exam', item.Name).get('lastUpdated'))) {
+									store.find('user-exam', item.Name).then(function(exam){
+										exam.setProperties({
+												isCompleted: item.Is_Completed__c,
+												timeLeft : item.Time_Left__c,
+												resultPercentage : item.Exam_Result_Percentage__c,
+												result : item.Exam_Result__c,
+												numberOfQuestions : item.Number_of_Questions__c,
+												rightAnswers : item.Right_Answers__c,
+												passingPercentage : item.Passing_Percentage__c,
+												lastUpdated: moment(item.LastModifiedDate)
+										});
+									});						
+								} 
 							});
-						}
 						accountController.setProperties ({isLoading: false});
 					},
 					error : function (data) {

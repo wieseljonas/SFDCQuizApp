@@ -17,6 +17,8 @@
         <th>Passing %</th>
         <th>Exam Result %</th>
         <th>Exam Result</th>
+        <th>Time Left</th>
+        <th>Status</th>
         <th></th>
       </tr>
     </thead>
@@ -30,11 +32,19 @@
         <td>{{passingPercentage}}%</td>
         <td>{{resultPercentage}}%</td>
         <td>{{result}}</td>
+        <td>{{timeLeft}}</td>
+        <td>{{#if isCompleted}}
+          <span class="btn btn-success btn-xs" role="button">Completed</span>
+          {{#link-to 'exam' this class="btn btn-primary btn-xs"}}View Results{{/link-to}}
+        {{else}}
+          <span class="btn btn-warning btn-xs" role="button">In Progress</span>
+          {{#link-to 'exam' this class="btn btn-primary btn-xs"}}Resume{{/link-to}}
+        {{/if}}</td>
         <td>
         <a {{action "deleteExam" name}} type="submit" class="btn btn-danger btn-xs" role="button"> 
         delete {{#if isDeleting}}
         deleting <img src="assets/images/ajaxloadinggreen.gif">{{/if}}
-        </a>   {{#link-to 'exam' this class="btn btn-primary btn-xs"}}view results{{/link-to}}
+        </a>   
         </td>
       </tr>
     {{/each}}   
@@ -47,6 +57,7 @@
         <td></td>
         <td></td>
         <td></td>
+        success
       </tr>
     {{/if}}
     </tbody>  

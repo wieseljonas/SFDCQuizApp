@@ -8,7 +8,6 @@ export default Ember.Route.extend({
     	this.controller.set('model', model);
   	},
   	afterModel: function(question) {
-  		console.log(question);
 		var applicationController = this.controllerFor('application');
 		if (!applicationController.isLoggedIn) {
 			this.transitionTo('index');	
@@ -16,4 +15,5 @@ export default Ember.Route.extend({
 			this.controllerFor('question').send('setIndex', question);
 		}
 	}
+
 });

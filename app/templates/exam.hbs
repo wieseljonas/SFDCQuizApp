@@ -13,9 +13,9 @@
 		      <tr>
             <th class="col-md-1">Index</th>
 		        <th class="col-md-6">Question</th>
-<!-- 		        <th class="col-md-2">Answers</th>
-		        <th class="col-md-2">Solution</th> -->
-		        <th class="col-md-2">Result</th>
+            {{#if isCompleted}}
+		        <th class="col-md-2 text-center">Result</th>
+            {{/if}}
 		        <th class="col-md-2"></th>
 		      </tr>
 		    </thead>
@@ -24,18 +24,33 @@
 		      <tr>
             <th>{{question.questionIndex}}</th>
 		        <td>{{question.question}}</td>
-<!-- 		        <td>{{question.chosenAnswers}}</td>
-		        <td>{{question.solutions}}</td> -->
-		        <td>{{question.isCorrect}}</td>
-		        <td>{{#link-to 'question' question.id class="btn btn-primary btn-xs"}}View Question{{/link-to}}</td>
+
+            {{#if isCompleted}}
+		        <td class="text-center">{{#if question.isCorrect}}
+                    <span class="btn btn-success">Right</span>
+                {{else}}
+                    <span class="btn btn-danger">Wrong</span>
+                {{/if}}
+            </td>
+            {{/if}}
+		        <td class="text-center">
+            {{#link-to 'question' question.id class="btn btn-primary btn-xs"}}
+              {{#if isCompleted}}
+                Review Question
+              {{else}}
+                Go To Question
+              {{/if}}
+            {{/link-to}}
+            </td>
 		      </tr>
 		    {{/each}}
 		    {{#if isLoading}}
 		      <tr>
 		        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
 		        <td></td>
-<!-- 		        <td></td>
-		        <td></td> -->
+            {{#if isCompleted}}
+            <td></td>
+            {{/if}}
 		        <td></td>
 		      </tr>
 		    {{/if}}

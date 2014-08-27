@@ -37,10 +37,10 @@ export default Ember.ObjectController.extend({
 							console.log('first load');
 							exam.set("lastUpdated", moment(data.LastModifiedDate));
 							data.forEach( function(question) {
-								console.log(question);
-								store.createRecord('exam-question', {
+								var questioncreated = store.createRecord('exam-question', {
 									question : question.Question__r.Question__c,
 									name : question.Name,
+									id : question.Name,
 									questionType : question.Question_Type__c,
 									isCorrect: question.Is_Correct__c,
 									isCorrectManual : question.Is_Correct_Manual__c,
@@ -51,53 +51,51 @@ export default Ember.ObjectController.extend({
 									userexam: exam,
 									lastUpdated: moment(question.LastModifiedDate)
 								});
-								console.log(question);
 								question.ExamAnswers__r.records.forEach( function(answer) {
 									console.log(answer);
 									store.createRecord('exam-answer', {
 											name : answer.Name,
+											id: answer.Name,
 											choice : answer.Choice__c,
 											chosenAnswer : answer.Chosen_Answer__c,
 											isCorrect : answer.Is_Correct__c,
-											solution : answer.Solution__c
+											solution : answer.Solution__c,
+											questionID : question.Name,
+											question : questioncreated
 									});
-
 								});
-
+							}).then(function (){
+								if (examController.get('model')=== undefined){
+									console.log('set model');
+									//examController.set('model', store.getById('user-exam',examID));
+								}
 							});
-						} else if (!moment(data.LastModifiedDate).isSame(exam.get('lastUpdated'))) {
-							console.log('not equal updating');
-							exam.set("lastUpdated", moment(data.LastModifiedDate));
-							console.log(exam.get('questions'));
-							exam.get('questions').get('content').forEach(function (outdatedquestion){
-								outdatedquestion.unloadRecord();
-							});
-							var updateEvent = {
-								id: examID, 
-								name : data.Name,
-								resultPercentage : data.Exam_Result_Percentage__c,
-								result : data.Exam_Result__c,
-								rightAnswers : data.Right_Answers__c,
-								passingPercentage : data.Passing_Percentage__c,
-								examTaker: data.Exam_Taker__r.Email__c,
-								lastUpdated: moment(data.LastModifiedDate)
-							};
-							store.update('user-exam', updateEvent);
-							data.Exam_Questions__r.records.forEach(function (question){
-								store.createRecord('exam-question', {
-									question : question.Question__r.Question__c,
-									questionID : question.Name,
-									answer : question.Answer__c,
-									
-									solution : question.Solution__c,
-									answerArray : question.Answer__c,
-									solutionArray: question.Solution__c.replace(/\\/g, ''),
-									examID : question.Exam_Name__c,
-									isCorrect : question.Is_Correct__c,
-									questionIndex : question.Index__c,
-									userexam: exam,
-									lastUpdated: moment(question.LastModifiedDate)
-								});
+						}  else {
+							console.log('updating');
+							//exam.set("lastUpdated", moment(data.LastModifiedDate));
+							//console.log(exam.get('questions'));
+							//exam.get('questions').get('content').forEach(function (outdatedquestion){
+							//	outdatedquestion.unloadRecord();
+							//});
+							data.forEach( function(question) {
+								if (!moment(question.LastModifiedDate).isSame(store.getById('exam-question', question.Name).get('lastUpdated'))) {
+									console.log('updating changed question');
+									store.find('exam-question', question.Name).then(function(q) {
+									  	q.setProperties({ 
+											isCorrect: question.Is_Correct__c,
+											isCorrectManual : question.Is_Correct_Manual__c,
+											lastUpdated: moment(question.LastModifiedDate)
+										});
+									});	
+									question.ExamAnswers__r.records.forEach( function(answer) {
+										store.find('exam-answer', answer.Name).then(function(a) {
+										  	a.setProperties({ 
+												chosenAnswer : answer.Chosen_Answer__c,
+												isCorrect : answer.Is_Correct__c,
+											});
+										});
+									});
+								}		
 							});	
 						}
 						examController.setProperties({isLoading: false});
