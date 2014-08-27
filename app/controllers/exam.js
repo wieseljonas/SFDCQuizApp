@@ -22,7 +22,7 @@ export default Ember.ObjectController.extend({
 			//console.log(date);
 			store.find('user-exam', examID).then(function(exam){
 				console.log(exam.get('name'));
-				var requestdata = '{ "action": "GetExam","useremail":"'+userProperties.useremail+'","secretToken":"'+userProperties.currentToken+'","examID":"'+exam.get('name')+'"}';
+				var requestdata = '{ "action": "GetExamQuestions","useremail":"'+userProperties.useremail+'","secretToken":"'+userProperties.currentToken+'","examName":"'+exam.get('name')+'"}';
 				window.console.log(requestdata);
 				Ember.$.ajax({
 					url: "http://sfdcnodeproxy.herokuapp.com/proxy/Exam",
@@ -36,21 +36,34 @@ export default Ember.ObjectController.extend({
 						if (exam.get('questions').get('length') === 0) {
 							console.log('first load');
 							exam.set("lastUpdated", moment(data.LastModifiedDate));
-							data.Exam_Questions__r.records.forEach(function(question){
-								console.log(question.Answer__c);
+							data.forEach( function(question) {
+								console.log(question);
 								store.createRecord('exam-question', {
 									question : question.Question__r.Question__c,
-									questionID : question.Name,
-									answer : question.Answer__c,
-									solution : question.Solution__c,
-									solutionArray: question.Solution__c.replace(/\\/g, ''),
-									answerArray : question.Answer__c,
+									name : question.Name,
+									questionType : question.Question_Type__c,
+									isCorrect: question.Is_Correct__c,
+									isCorrectManual : question.Is_Correct_Manual__c,
+									numberofAnswers : question.Number_of_Answers__c,
+									numberofChoices: question.Number_of_Choices__c,
 									examID : question.Exam_Name__c,
-									isCorrect : question.Is_Correct__c,
 									questionIndex : question.Index__c,
 									userexam: exam,
 									lastUpdated: moment(question.LastModifiedDate)
 								});
+								console.log(question);
+								question.ExamAnswers__r.records.forEach( function(answer) {
+									console.log(answer);
+									store.createRecord('exam-answer', {
+											name : answer.Name,
+											choice : answer.Choice__c,
+											chosenAnswer : answer.Chosen_Answer__c,
+											isCorrect : answer.Is_Correct__c,
+											solution : answer.Solution__c
+									});
+
+								});
+
 							});
 						} else if (!moment(data.LastModifiedDate).isSame(exam.get('lastUpdated'))) {
 							console.log('not equal updating');
