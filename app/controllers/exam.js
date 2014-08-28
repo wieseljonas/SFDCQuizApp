@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-	needs: ['application'],
+	needs: ['application','account'],
 	isLoading: false,
 	examID:'',
 	questions: (function() {
@@ -11,16 +11,86 @@ export default Ember.ObjectController.extend({
 		});
 	}).property('content.questions'),
 	actions: {
+		LoadUserExams: function (examID) {
+			var applicationController = this.get('controllers.application');
+			var store = this.store;
+			var accountController = this.get('controllers.account');
+			var examController = this;
+			var userexams = store.findAll('user-exam');
+			accountController.setProperties ({isLoading: true});
+			userexams.then(function() {
+				var userProperties = applicationController.getProperties('useremail','currentToken');
+				var requestdata = '{ "action": "GetExams","useremail":"'+userProperties.useremail+'","secretToken":"'+userProperties.currentToken+'"}';
+				Ember.$.ajax({
+					url: "http://sfdcnodeproxy.herokuapp.com/proxy/Exam",
+					type: "POST",
+					contentType: "application/json",
+					data: requestdata,
+					success : function (data) {
+
+						//window.console.log(data);
+						data.forEach(function (item){
+							console.log(store.getById('user-exam', item.Name));
+								if (store.getById('user-exam', item.Name) === null) {
+										store.createRecord('user-exam', {
+											salesforceid : item.Id,
+											name : item.Name,
+											id: item.Name,
+											isCompleted: item.Is_Completed__c,
+											timeLeft : item.Time_Left__c,
+											resultPercentage : item.Exam_Result_Percentage__c,
+											result : item.Exam_Result__c,
+											numberOfQuestions : item.Number_of_Questions__c,
+											rightAnswers : item.Right_Answers__c,
+											passingPercentage : item.Passing_Percentage__c,
+											examType : item.Exam_Type__r.Name,
+											examTaker: item.Exam_Taker__r.Email__c,
+											lastUpdated: moment(item.LastModifiedDate)
+										});
+								} else if (!moment(item.LastModifiedDate).isSame(store.getById('user-exam', item.Name).get('lastUpdated'))) {
+									store.find('user-exam', item.Name).then(function(exam){
+										exam.setProperties({
+												isCompleted: item.Is_Completed__c,
+												timeLeft : item.Time_Left__c,
+												resultPercentage : item.Exam_Result_Percentage__c,
+												result : item.Exam_Result__c,
+												numberOfQuestions : item.Number_of_Questions__c,
+												rightAnswers : item.Right_Answers__c,
+												passingPercentage : item.Passing_Percentage__c,
+												lastUpdated: moment(item.LastModifiedDate)
+										});
+									});						
+								} 
+							});
+						accountController.setProperties ({isLoading: false});
+						examController.send('loadExamData', examID);
+					},
+					error : function (data) {
+						console.log(data);
+					}
+				});
+			});
+
+		},
 		loadData: function (examID) {
+			console.log('loadData');
+			this.setProperties({isLoading: true});
+			console.log(examID);
+			if(this.store.getById('user-exam', examID) === null){
+				this.send('LoadUserExams', examID);
+			} else {
+				this.send('loadExamData', examID);
+			}
+		},
+		loadExamData: function (examID){
+			console.log('loadData2');
 			var applicationController = this.get('controllers.application');
 			var examController = this;
 			var store = examController.store;
-			examController.setProperties({isLoading: true});
 			var userProperties = applicationController.getProperties('useremail','currentToken');
-			
-			//var date = new Date(2014-08-18T09:26:00.000+0000);
-			//console.log(date);
+			console.log('loadData2');
 			store.find('user-exam', examID).then(function(exam){
+				console.log('loadData3');
 				console.log(exam.get('name'));
 				var requestdata = '{ "action": "GetExamQuestions","useremail":"'+userProperties.useremail+'","secretToken":"'+userProperties.currentToken+'","examName":"'+exam.get('name')+'"}';
 				window.console.log(requestdata);
@@ -52,7 +122,6 @@ export default Ember.ObjectController.extend({
 									lastUpdated: moment(question.LastModifiedDate)
 								});
 								question.ExamAnswers__r.records.forEach( function(answer) {
-									console.log(answer);
 									store.createRecord('exam-answer', {
 											name : answer.Name,
 											id: answer.Name,
@@ -64,12 +133,12 @@ export default Ember.ObjectController.extend({
 											question : questioncreated
 									});
 								});
-							}).then(function (){
-								if (examController.get('model')=== undefined){
-									console.log('set model');
-									//examController.set('model', store.getById('user-exam',examID));
-								}
+								
 							});
+							if (examController.get('model')=== null){
+									console.log('set model');
+									examController.set('model', exam );
+							}
 						}  else {
 							console.log('updating');
 							//exam.set("lastUpdated", moment(data.LastModifiedDate));

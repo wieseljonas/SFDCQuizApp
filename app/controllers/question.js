@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
+	needs: ['application'],
 	previousQuestion:"",
 	nextQuestion: "",
 	actions: {
@@ -30,8 +31,27 @@ export default Ember.ObjectController.extend({
 			}
 		},
 		submitAnswer: function (){
-			console.log(this.get('model'));
-			this.transitionToRoute('question', this.get('nextQuestion'));
+			console.log(this.get('model')._relationships.answers.content);
+			var applicationController = this.get('controllers.application');
+			var questionController = this;
+			console.log('loadData1');
+			var userProperties = applicationController.getProperties('useremail','currentToken');
+			console.log('loadData1.5');
+			var requestdata = '{ "action": "PostAnswer","useremail":"'+userProperties.useremail+'","secretToken":"'+userProperties.currentToken+'","data":"'+JSON.stringify(this.get('model')._relationships.answers.content)+'"}';
+			console.log('loadData2');
+			Ember.$.ajax({
+					url: "http://sfdcnodeproxy.herokuapp.com/proxy/Exam",
+					type: "POST",
+					contentType: "application/json",
+					data: requestdata,
+					success : function (data) {
+						console.log(data);
+						questionController.transitionToRoute('question', questionController.get('nextQuestion'));
+					},
+					error : function (data) {
+						console.log(data);
+					}
+			});
 		}
 	}
 });

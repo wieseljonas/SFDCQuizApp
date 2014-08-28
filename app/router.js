@@ -11,7 +11,6 @@ Router.map(function() {
   	this.route('account');
     this.resource('exam', { path: 'account/exam/:exam_id' });
     this.resource('question', { path: 'account/exam/question/:question_id'});
-    this.resource('takeExam', { path: 'account/exam' });
   	this.route('settings');
 });
 

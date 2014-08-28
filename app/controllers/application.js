@@ -65,6 +65,7 @@ export default Ember.Controller.extend({
       }, this);
      });
       this.store.unloadAll('exam-question');
+      this.store.unloadAll('exam-answer');
      //   console.log('deleting user exam questions');
      //   this.store.findAll('exam-question').then(function(record){
      //   record.content.forEach(function(rec) {
