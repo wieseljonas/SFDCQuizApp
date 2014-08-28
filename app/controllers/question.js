@@ -36,8 +36,8 @@ export default Ember.ObjectController.extend({
 			var questionController = this;
 			console.log('loadData1');
 			var userProperties = applicationController.getProperties('useremail','currentToken');
-			console.log('loadData1.5');
-			var requestdata = '{ "action": "PostAnswer","useremail":"'+userProperties.useremail+'","secretToken":"'+userProperties.currentToken+'","data":"'+JSON.stringify(this.get('model')._relationships.answers.content)+'"}';
+			var answerJSON = JSON.stringify(this.get('model')._relationships.answers.content).replace(/"/g,'\\"');
+			var requestdata = '{ "action": "PostAnswer","useremail":"'+userProperties.useremail+'","secretToken":"'+userProperties.currentToken+'","data":"'+answerJSON+'"}';
 			console.log('loadData2');
 			Ember.$.ajax({
 					url: "http://sfdcnodeproxy.herokuapp.com/proxy/Exam",
@@ -45,8 +45,8 @@ export default Ember.ObjectController.extend({
 					contentType: "application/json",
 					data: requestdata,
 					success : function (data) {
-						console.log(data);
 						questionController.transitionToRoute('question', questionController.get('nextQuestion'));
+						console.log(data);
 					},
 					error : function (data) {
 						console.log(data);
