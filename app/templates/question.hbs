@@ -3,7 +3,7 @@
   		{{#link-to 'question' previousQuestion class="btn btn-primary"}}Previous question{{/link-to}}
     	{{#link-to 'exam' userexam class="btn btn-success"}}Question Index{{/link-to}}
     	{{#unless userexam.isCompleted}}
-    	<a {{action "stopExam" id}} class="btn btn-danger " role="button">Stop Exam</a>
+    	
     	{{/unless}}
     	{{#link-to 'question' nextQuestion class="btn btn-primary pull-right"}}Next question{{/link-to}}
   </div>
@@ -51,8 +51,11 @@
 	    		{{input type="checkbox" checked=a.chosenAnswer name=a.id}}{{a.choice}}
 			</label>
 		</div>
-	    
+
 		{{/each}}
-		<a {{action "submitAnswer" id}} class="btn btn-success pull-right" role="button">Submit</a>
+		<br/>
+	    <br/>
+		{{component-loading-button id="stopbutton" classNames="pull-left" isLoading=isStopping buttonText='Stop Exam' buttonLoadingText='Stopping Exam' action='stopExam'}}
+		{{component-loading-button id="submitbutton" classNames="pull-right" isLoading=isSubmitting buttonText='Submit' buttonLoadingText='Submitting' action='submitAnswer'}}
    	{{/if}}
 </div>

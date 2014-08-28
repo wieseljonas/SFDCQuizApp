@@ -41,7 +41,7 @@ export default Ember.ObjectController.extend({
 											resultPercentage : item.Exam_Result_Percentage__c,
 											result : item.Exam_Result__c,
 											numberOfQuestions : item.Number_of_Questions__c,
-											rightAnswers : item.Right_Answers__c,
+											rightAnswers : item.Correct_Answers__c,
 											passingPercentage : item.Passing_Percentage__c,
 											examType : item.Exam_Type__r.Name,
 											examTaker: item.Exam_Taker__r.Email__c,

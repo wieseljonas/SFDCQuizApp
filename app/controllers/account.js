@@ -56,7 +56,7 @@ export default Ember.ArrayController.extend({
 					success : function (data) {
 						//window.console.log(data);
 						data.forEach(function (item){
-							console.log(store.getById('user-exam', item.Name));
+							//console.log(store.getById('user-exam', item.Name));
 								if (store.getById('user-exam', item.Name) === null) {
 										store.createRecord('user-exam', {
 											salesforceid : item.Id,
@@ -67,7 +67,7 @@ export default Ember.ArrayController.extend({
 											resultPercentage : item.Exam_Result_Percentage__c,
 											result : item.Exam_Result__c,
 											numberOfQuestions : item.Number_of_Questions__c,
-											rightAnswers : item.Right_Answers__c,
+											rightAnswers : item.Correct_Answers__c,
 											passingPercentage : item.Passing_Percentage__c,
 											examType : item.Exam_Type__r.Name,
 											examTaker: item.Exam_Taker__r.Email__c,

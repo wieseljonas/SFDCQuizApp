@@ -7,6 +7,7 @@
 </div>
 <div class="container">
   {{outlet}}
+  <h4>Exams in progress</h4>
   <div class="table-responsive">
     <table class="table table-striped">
     <thead>
@@ -25,21 +26,18 @@
 
     <tbody>
      {{#each}}
+     {{#unless isCompleted}}
       <tr>
         <td>{{name}}</td>
         <td>{{numberOfQuestions}}</td>
-        <td>{{rightAnswers}}</td>
+        <td>NA</td>
         <td>{{passingPercentage}}%</td>
-        <td>{{resultPercentage}}%</td>
-        <td>{{result}}</td>
+        <td>NA%</td>
+        <td>NA</td>
         <td>{{timeLeft}}</td>
-        <td>{{#if isCompleted}}
-          <span class="btn btn-success btn-xs" role="button">Completed</span>
-          {{#link-to 'exam' this class="btn btn-primary btn-xs"}}View Results{{/link-to}}
-        {{else}}
-          <span class="btn btn-warning btn-xs" role="button">In Progress</span>
-          {{#link-to 'exam' this class="btn btn-primary btn-xs"}}Resume{{/link-to}}
-        {{/if}}</td>
+        <td>
+          {{#link-to 'exam' this class="btn btn-success btn-xs"}}Resume{{/link-to}}
+        </td>
         <td>
         <a {{action "deleteExam" name}} type="submit" class="btn btn-danger btn-xs" role="button"> 
         delete {{#if isDeleting}}
@@ -47,6 +45,7 @@
         </a>   
         </td>
       </tr>
+    {{/unless}}
     {{/each}}   
     {{#if isLoading}}
       <tr>
@@ -57,7 +56,60 @@
         <td></td>
         <td></td>
         <td></td>
-        success
+      </tr>
+    {{/if}}
+    </tbody>  
+   </table>
+  </div>
+  <h4>Completed Exams</h4>
+  <div class="table-responsive">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Exam ID</th>
+        <th>Total Question</th>
+        <th>Right Answers</th>
+        <th>Passing %</th>
+        <th>Exam Result %</th>
+        <th>Exam Result</th>
+        <th>Time Left</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+     {{#each}}
+     {{#if isCompleted}}
+      <tr>
+        <td>{{name}}</td>
+        <td>{{numberOfQuestions}}</td>
+        <td>{{rightAnswers}}</td>
+        <td>{{passingPercentage}}%</td>
+        <td>{{resultPercentage}}%</td>
+        <td>{{result}}</td>
+        <td>Finished</td>
+        <td>
+          {{#link-to 'exam' this class="btn btn-primary btn-xs"}}View Results{{/link-to}}
+        </td>
+        <td>
+        <a {{action "deleteExam" name}} type="submit" class="btn btn-danger btn-xs" role="button"> 
+        delete {{#if isDeleting}}
+        deleting <img src="assets/images/ajaxloadinggreen.gif">{{/if}}
+        </a>   
+        </td>
+      </tr>
+    {{/if}}  
+    {{/each}}   
+    {{#if isLoading}}
+      <tr>
+        <td>Loading <img src="assets/images/ajaxloadingblack.gif"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
     {{/if}}
     </tbody>  
